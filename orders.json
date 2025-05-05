@@ -1,0 +1,48 @@
+{
+    "data": [
+      {
+        "customer": {
+          "name": "John Doe",
+          "customer": {
+            "isBlacklisted": false,
+            "joinDate": "2023-01-15"
+          }
+        },
+        "amount": {
+          "cartTotal": 1000,
+          "total": 950,
+          "charges": [{"amount": 50}]
+        },
+        "shippingAddress": {
+          "city": "Dhaka",
+          "district": "Mirpur"
+        },
+        "cart": [{"quantity": 2}],
+        "paymentMethod": "cod",
+        "status": "completed",
+        "createAt": "2025-05-15T14:30:00Z"
+      },
+      {
+        "customer": {
+          "name": "Jane Smith",
+          "customer": {
+            "isBlacklisted": true,
+            "joinDate": "2024-03-10"
+          }
+        },
+        "amount": {
+          "cartTotal": 2000,
+          "total": 2000,
+          "charges": [{"amount": 100}]
+        },
+        "shippingAddress": {
+          "city": "Chittagong",
+          "district": "Agrabad"
+        },
+        "cart": [{"quantity": 1}, {"quantity": 1}],
+        "paymentMethod": "online",
+        "status": "cancelled",
+        "createAt": "2025-05-20T09:15:00Z"
+      }
+    ]
+  }

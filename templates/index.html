@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Order Cancellation Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Order Cancellation Predictor</h1>
+            <p class="subtitle">Analyze order cancellation risk with advanced features</p>
+        </header>
+
+        <form method="POST" class="prediction-form">
+            <div class="form-section">
+                <h2>Customer Information</h2>
+                <div class="form-group">
+                    <label for="customer_name">Customer Name:</label>
+                    <input type="text" id="customer_name" name="customer_name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer_is_blacklisted">Is Customer Blacklisted?</label>
+                    <select id="customer_is_blacklisted" name="customer_is_blacklisted" required>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="customer_join_date">Customer Join Date:</label>
+                    <input type="date" id="customer_join_date" name="customer_join_date">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Order Details</h2>
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="cart_total">Cart Total ($):</label>
+                        <input type="number" step="0.01" id="cart_total" name="cart_total" required>
+                    </div>
+                    
+                    <div class="form-group half-width">
+                        <label for="total_amount">Total Amount ($):</label>
+                        <input type="number" step="0.01" id="total_amount" name="total_amount" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="shipping_charge">Shipping Charge ($):</label>
+                    <input type="number" step="0.01" id="shipping_charge" name="shipping_charge" value="0">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="product_count">Number of Products:</label>
+                        <input type="number" id="product_count" name="product_count" value="1" required>
+                    </div>
+                    
+                    <div class="form-group half-width">
+                        <label for="total_quantity">Total Quantity:</label>
+                        <input type="number" id="total_quantity" name="total_quantity" value="1" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Location & Timing</h2>
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="city">City:</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    
+                    <div class="form-group half-width">
+                        <label for="district">District:</label>
+                        <input type="text" id="district" name="district" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="order_time">Order Date/Time:</label>
+                    <input type="datetime-local" id="order_time" name="order_time" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Payment Method</h2>
+                <div class="form-group">
+                    <label for="payment_method">Payment Method:</label>
+                    <select id="payment_method" name="payment_method" required>
+                        <option value="cod">Cash on Delivery (COD)</option>
+                        <option value="online">Online Payment</option>
+                        <option value="card">Credit/Debit Card</option>
+                        <option value="mobile_wallet">Mobile Wallet</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="predict-button">Analyze Order Risk</button>
+        </form>
+
+        {% if result %}
+        <div class="result-container {% if result.prediction == 'Cancel' %}warning{% else %}success{% endif %}">
+            <h2>Prediction Result</h2>
+            <div class="result-card">
+                <div class="result-indicator {% if result.prediction == 'Cancel' %}danger{% else %}safe{% endif %}">
+                    {{ result.prediction }}
+                </div>
+                <div class="result-details">
+                    <p><strong>Confidence Level:</strong> {{ "%.2f"|format(result.probability * 100) }}%</p>
+                    <p><strong>Key Factors:</strong></p>
+                    <ul class="factor-list">
+                        <li>Payment Method: {{ form_data.payment_method|capitalize }}</li>
+                        <li>Location: {{ form_data.city }}, {{ form_data.district }}</li>
+                        <li>Order Value: ${{ "%.2f"|format(form_data.total_amount) }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>Order Prediction System v2.0 | Uses Machine Learning</p>
+    </footer>
+</body>
+</html>
